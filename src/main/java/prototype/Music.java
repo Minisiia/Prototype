@@ -1,5 +1,7 @@
 package prototype;
 
+import java.util.Objects;
+
 public class Music extends Product{
     private String artist;
     private String genre;
@@ -38,8 +40,11 @@ public class Music extends Product{
     public void setAlbum(String album) {
         this.album = album;
     }
-
     @Override
+    public Music clone() {
+        return (Music) super.clone();
+    }
+/*
     public Music clone() {
         Music cloneMusic = new Music();
         cloneMusic.setId(this.getId());
@@ -51,7 +56,7 @@ public class Music extends Product{
         cloneMusic.setGenre(this.getGenre());
         cloneMusic.setAlbum(this.getAlbum());
         return cloneMusic;
-    }
+    }*/
 
     @Override
     public String toString() {
@@ -65,5 +70,18 @@ public class Music extends Product{
                 ", genre='" + genre + '\'' +
                 ", album='" + album + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Music music)) return false;
+        if (!super.equals(o)) return false;
+        return Objects.equals(getArtist(), music.getArtist()) && Objects.equals(getGenre(), music.getGenre()) && Objects.equals(getAlbum(), music.getAlbum());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), getArtist(), getGenre(), getAlbum());
     }
 }

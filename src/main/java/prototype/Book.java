@@ -1,5 +1,7 @@
 package prototype;
 
+import java.util.Objects;
+
 public class Book extends Product{
     private String author;
     private String publisher;
@@ -39,7 +41,18 @@ public class Book extends Product{
         this.isbn = isbn;
     }
 
+    /**
+     * При клонировании объектов классов-наследников Book, Movie и Music, происходит создание новых объектов, которые имеют свои собственные копии параметров исходного объекта.
+     * Это происходит благодаря переопределению метода clone() в каждом из этих классов и вызову метода super.clone()
+     * для создания копии базового объекта и дальнейшему копированию всех параметров, которые необходимы для этого класса.
+     * @return A copy of the Book object
+     * @throws CloneNotSupportedException if clone is not possible
+     */
+    @Override
     public Book clone() {
+        return (Book) super.clone();
+    }
+/*    public Book clone() {
         Book cloneBook = new Book();
         cloneBook.setId(this.getId());
         cloneBook.setName(this.getName());
@@ -50,6 +63,19 @@ public class Book extends Product{
         cloneBook.setPublisher(this.getPublisher());
         cloneBook.setIsbn(this.getIsbn());
         return cloneBook;
+    }*/
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Book book)) return false;
+        if (!super.equals(o)) return false;
+        return Objects.equals(getAuthor(), book.getAuthor()) && Objects.equals(getPublisher(), book.getPublisher()) && Objects.equals(getIsbn(), book.getIsbn());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), getAuthor(), getPublisher(), getIsbn());
     }
 
     @Override

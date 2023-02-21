@@ -1,6 +1,7 @@
 package prototype;
 
 import java.util.List;
+import java.util.Objects;
 
 public class Movie extends Product{
     private String director;
@@ -40,8 +41,11 @@ public class Movie extends Product{
     public void setDuration(int duration) {
         this.duration = duration;
     }
-
     @Override
+    public Movie clone() {
+        return (Movie) super.clone();
+    }
+/*
     public Movie clone() {
         Movie cloneMovie = new Movie();
         cloneMovie.setId(this.getId());
@@ -53,6 +57,19 @@ public class Movie extends Product{
         cloneMovie.setDirector(this.getDirector());
         cloneMovie.setDuration(this.getDuration());
         return cloneMovie;
+    }*/
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Movie movie)) return false;
+        if (!super.equals(o)) return false;
+        return getDuration() == movie.getDuration() && Objects.equals(getDirector(), movie.getDirector()) && Objects.equals(getActors(), movie.getActors());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), getDirector(), getActors(), getDuration());
     }
 
     @Override

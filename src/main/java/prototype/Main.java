@@ -53,7 +53,11 @@ public class Main {
         System.out.println("Music list:");
         for (Music temp : musicList) System.out.println(temp);
 
-        Book cloneBook1 =bookList.get(0).clone();
+        Book cloneBook1 = bookList.get(0).clone();
+        System.out.print("\nCompare book1 references: ");
+        System.out.println(book1 == cloneBook1);
+        System.out.print("Compare book1 equality: ");
+        System.out.println(book1.equals(cloneBook1) + "\n");
         cloneBook1.setName("War and Peace (new edition)");
         cloneBook1.setPrice(cloneBook1.getPrice() * 1.1);
         bookList.add(cloneBook1);

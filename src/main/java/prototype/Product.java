@@ -1,6 +1,8 @@
 package prototype;
 
-public class Product {
+import java.util.Objects;
+
+public class Product implements Cloneable{
     private int id;
     private String name;
     private String description;
@@ -57,8 +59,17 @@ public class Product {
     public void setImage(String image) {
         this.image = image;
     }
-
     public Product clone() {
+        Product clone = null;
+        try {
+            clone = (Product) super.clone();
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
+        return clone;
+    }
+
+    /*    public Product clone() {
         Product product = new Product();
         product.setId(this.getId());
         product.setName(this.getName());
@@ -66,7 +77,7 @@ public class Product {
         product.setPrice(this.getPrice());
         product.setImage(this.getImage());
         return product;
-    }
+    }*/
 
     @Override
     public String toString() {
@@ -77,5 +88,17 @@ public class Product {
                 ", price=" + price +
                 ", image='" + image + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Product product)) return false;
+        return getId() == product.getId() && Double.compare(product.getPrice(), getPrice()) == 0 && Objects.equals(getName(), product.getName()) && Objects.equals(getDescription(), product.getDescription()) && Objects.equals(getImage(), product.getImage());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getName(), getDescription(), getPrice(), getImage());
     }
 }
